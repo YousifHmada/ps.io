@@ -1,0 +1,24 @@
+{
+  "name": "os_scheduler",
+  "homepage": "./",
+  "main": "src/main.js",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "create-react-class": "^15.6.3",
+    "g": "^2.0.1",
+    "react": "^16.2.0",
+    "react-create-class": "^1.0.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build --watch",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "electron": "^1.8.3"
+  }
+}

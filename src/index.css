@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+header, section {
+  display: block;
+}
+body {
+  font-family: 'Droid Serif';
+}
+h1, h2 {
+  text-align: center;
+  font-weight: normal;
+}
+.connected {
+  margin: auto;
+  padding: 0;
+  /*width: 310px;*/
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#connected {
+  width: 800px;
+  margin: 80px auto;
+}
+.connected a{
+  width: 60px;
+  height: 60px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 3.7;
+  border: 1px solid #ddd;
+  cursor: pointer; 
+}
