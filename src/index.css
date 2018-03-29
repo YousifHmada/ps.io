@@ -3,42 +3,43 @@
     padding: 0%;
 }
 @font-face {
-    font-family: "Another day in Paradise";
+    font-family: "BebasNeue";
+    /*src: url("BebasNeue.otf");*/
 }
 body {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: #ccc;
+    background-color: #fff;
 }
+
 
 
 /* window styles */
 .UI {
-    margin-top: 20px;  
-    width: 450px;
+    margin-top: 20px;
+    width: 550px;
     height: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding-bottom: 20px;
-    background-color: rgb(243, 234, 241);
-    
+    background-color: #233142;
 }
 
 header {
     width: 100%;
     height: 50px;
-    
-    margin-bottom: 10px;
+    background-color:   #903749;
+    margin-bottom: 20px;
     text-align: center;
 }
 
 header span {
     font-size: 40px;
-    font-weight: 700;
-    font-family:"Another day in Paradise", Arial, sans-serif;
-    color: #f6318c;
+    font-weight: 900;
+    font-family: "BebasNeue", sans-serif;
+    color: #e3e3e3;
 }
 
 .container {
@@ -46,9 +47,16 @@ header span {
     flex-direction: column;
     justify-content: space-between;
 }
+.holder{
+    
+    width: 520px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
 .table-content {
-    width: 100%;
+    width: 360px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -57,41 +65,48 @@ header span {
 }
 
 .controller {
-    display: flex;
+    width: 100px;
     height: auto;
-    width: 450px;
+    display: flex;
+    flex-direction: column;
+   
+}
+.buttons{
+    width: 520px;
+    height: auto;
+    margin-bottom: 20px;
+    display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-top: 10px;
+    justify-content: space-between; 
+ 
 }
 .output{
-    width: 420px;
+    width: 520px;
     height: auto;
-    border-top: 1px solid #364f6bad;
+    border-top: 1px solid #f76969e1;
     display: flex;
     height: auto;
     flex-direction: column;
     justify-content: space-around;
 }
+
 /*---------------------------------------------------------*/
 
 /* table */
 
 .table {
-    width: 420px;
-    color:#364f6b;
+    width: 360px;
+    background-color: #e3e3e31a;
     font-size: 16px;
-    border: 2px solid  #364f6bad;
-    
-    
+    color: #e3e3e3f3;
+    border: none;
     
 }
 
 .input .table td {
     height: 10px;
     color: #e3e3e3f3;
-    text-align: center
-    
+    text-align: center;
 }
 .input .table th {
     height: 10px;
@@ -100,59 +115,54 @@ header span {
 }
 .table input {
     width: 60px;
-    color: #4b6685d8;
+    color: #e3e3e3f3;
     background-color: transparent;
     padding-left: 5px;
     border: none;
 }
 
-
 /*--------------------------------------------------------------------*/
 
 /* buttons styles */
  .add {
-    background-color:transparent;
-    width: 30px;
-    height: 30px;
-    border: 1px solid  #f14796;
-    
-    border-radius: 50%;
+    background-color:   #903749;
+    width: 60px;
+    height: 40px;
+    border: none;
+    border-radius: 8%;
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
-    color: #f6318c;
- }
+    color: #e3e3e3;
+    line-height: -5; 
+    margin-right: 5px;
+}
 
  .submit {
-    width: 50px;
-    height: 50px;
-    border: 1px solid  #f14796;
-    background-color:transparent;
-    border-radius: 50%;
+    background-color:   #903749;
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
-    color: #f6318c;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    text-align: center;
-    margin-left: 170px;
-}
-.add:hover, .submit:hover{
-    background-color: #f6318c;
-    color: #fff;
+    color: #e3e3e3;
+    line-height: -5;
+    
 }
 
+
 .delete--btn {
-    width: 18px;
-    height: 20px;
-    background-color: #f14796;
-    border: 1px solid #f14796;
-    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+    border: 1px solid #e3e3e3f3;
+    border-radius: 10%;
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
@@ -172,118 +182,119 @@ tr:hover .delete--btn {
     display: inline;
 }
 
-
-
-.timer {
-    width: 100px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
-.timer label {
-    width: 60px;
-    height: 30px;
-    border: 1px solid  #364f6bad;
-    color: #364f6be8;
-    background-color:transparent;
-    text-align: center;
-    font-weight: 700;
-    font-size: 18px;
-    display: block;
-}
-
-
-.timer .stop {
-    width: 30px;
-    height: 30px;
-    background-color: #f6318c;
-    color: #e3e3e3;
-    border: 1px solid #f6318c;
-    border-radius: 50%;
-    padding: 0%;
-    cursor: pointer;
-    
-}
-.timer .play
- {
-    width: 30px;
-    height: 30px;
-    background-color: #f6318c;
-    color: #e3e3e3;
-    border: 1px solid #f6318c;
-    border-radius: 50%;
-    padding: 0%;
-    cursor: pointer;
-    
-}
-.timer .pause{
-    width: 30px;
-    height: 30px;
-    background-color: #f6318c;
-    color: #e3e3e3;
-    border: 1px solid #f6318c;
-    border-radius: 50%;
-    padding: 0%;
-    cursor: pointer;
-}
 .delete--btn:active,
 .add:active,
 .submit:active,
-.play-pause:active,
+.play:active,
+.pause:active,
 .stop:active {
-    background-color: #f755a0;
+    transform: translateY(2px);
 }
-/* .timer .play-pause {
+.timer {
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    
+}
+
+.timer label {
+    width: 40px;
+    height: 100%;
+    border: 1px solid #e3e3e31c;
+    color: #e3e3e3f3;
+    background-color: #e3e3e31a;
+    text-align: center;
+    font-weight: 700;
+    padding-top: 4px;
+    
+}
+
+.timer .play
+ {
+    width: 30px;
+    height: 100%;
+    background-color:   #903749;
+    color: #e3e3e3;
+    border: none;
+    padding: 0%;
+    cursor: pointer;
+}
+
+.timer .stop {
+    width: 30px;
+    height: 100%;
+    background-color:   #903749;
+    color: #e3e3e3;
+    border: none;
+    padding: 0%;
+    cursor: pointer;
+}
+
+.timer .pause {
+    width: 30px;
+    height: 100%;
+    background-color:   #903749;
+    color: #e3e3e3;
+    border: none;
+    padding: 0%;
+    cursor: pointer;
+    display: none;
+}
+.timer .play, .pause {
     border-right: 1px solid #e3e3e31c;
     border-left: 1px solid #e3e3e31c;
-} */
+}
 
 .timer img {
     fill: #fff;
     width: 14px;
-    /*margin-bottom: 4px;*/
+    margin-bottom: 5px;
 }
 
 .type select {
+    
     width: 100px;
     height: 30px;
-    background-color: transparent;
-    color:#364f6bec;
-    border: 1px solid #364f6bad;
-    
-    
+    background-color: #e3e3e31a;
+    color: #e3e3e3f3;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border: none;
 }
 
 /*---------------------------------------*/
 
- .time{
+.time{
     display: flex;
     height: 40px;
-    width: 420px;
+    width: 520px;
     margin-top: 10px;
     flex-direction: row;
     justify-content: space-around;
-    
+   
 }
+.chart{
+   
+    height: 40px;
+    width: 520px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+      
+}
+
 .time span{
-    color:#364f6bec; 
+    color:#e3e3e3; 
     font-weight:600;
 }
 .time label{
-    color: #4b6685d8;
+    color: #e3e3e3;
 }
-.chart{
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    width: 420px;
-    margin-top: 10px;
 
-}
 .chart .process{
-    flex: 1;
+    width: 100px;
     height: 45px;
     padding: 0;
     display: flex;
@@ -296,23 +307,21 @@ tr:hover .delete--btn {
     margin: 2px 0;
     border-left: 3px solid cornsilk;
 }
-.chart .process .start-time, .key{
+.chart .process label{
     height: 10px;
+   color: #e3e3e3;
 
 }
-/*
-.chart .process .end-time{
-    height: 10px;
-    float: right;
-}*/
+
 .red{
-    background-color: #b72a67;
+    background-color:#903749;
 }
 .yellow{
-    background-color: #fa9856
+    background-color: #928a97
 }
 .blue{
-    background-color: #375a7f}
+    background-color: #9ba6a5;
+}
 .green{
-    background-color: #e8559a
+    background-color:#29a19c;
 }

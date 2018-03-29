@@ -326,76 +326,78 @@ class App extends Component {
 		</header>
 		<section className="input">
 			<div className="container">
-				<div className="table-content">
-					<table className="table">
-						<thead>
-							<tr>
-								<th scope="col">P</th>
-								<th scope="col">Arrival</th>
-								<th scope="col">{this.state.state == 'reset' ? 'CPU Brust' : 'Remainder'}</th>
-								<th scope="col">Priority</th>
-							</tr>
-						</thead>
-						<tbody>
-							{processes}
-						</tbody>
-					</table>
-				</div>
-				<div className="controller">
-					<button className="add" onClick={this.addProcess.bind(this)} style={{
-            backgroundColor: this.state.pause ? '#ccc' : '',  
-            color: this.state.pause ? '#ccc' : '',
-            border: this.state.pause ? '1px solid #ccc' : ''
-          }} 
-          disabled={this.state.pause}>
-						<span style={{
-              color: this.state.pause ? 'black' : ''
-            }}>+</span>
-					</button>
-					<div className="type">
-						<select onChange={this.methodChanged.bind(this)}>
-							<option value="FCFS" selected>FCFS</option>
-							<option value="RR">RR</option>
-							<option value="SJF">SJF</option>
-							<option value="SJF-P">SJF-Preemptive</option>
-							<option value="Priority">Priority</option>
-							<option value="Priority-p">Priority-Preemptive</option>
-						</select>
-					</div>
-					<div className="timer">
-						<label for="">{this.state.counter}</label>
-						<div>
-							{!this.state.pause ? 
-                  (     
-                  <button className="play" onClick={this.startClock.bind(this)}>
-                    <img src="play-button.svg" alt="" />
+        <div class="holder">
+          <div className="table-content">
+  					<table className="table">
+  						<thead>
+  							<tr>
+  								<th scope="col">P</th>
+  								<th scope="col">Arrival</th>
+  								<th scope="col">{this.state.state == 'reset' ? 'CPU Brust' : 'Remainder'}</th>
+  								<th scope="col">Priority</th>
+  							</tr>
+  						</thead>
+  						<tbody>
+  							{processes}
+  						</tbody>
+  					</table>
+  				</div>
+  				<div className="controller">
+            <div className="type">
+              <select onChange={this.methodChanged.bind(this)}>
+                <option value="FCFS" selected>FCFS</option>
+                <option value="RR">RR</option>
+                <option value="SJF">SJF</option>
+                <option value="SJF-P">SJF-Preemptive</option>
+                <option value="Priority">Priority</option>
+                <option value="Priority-p">Priority-Preemptive</option>
+              </select>
+            </div>
+            <div className="timer">
+              <label for="">{this.state.counter}</label>
+              <div>
+                {!this.state.pause ? 
+                    (     
+                    <button className="play" onClick={this.startClock.bind(this)}>
+                      <img src="play-button.svg" alt="" />
+                    </button>
+                    )
+                 : (
+                  <button className="pause" onClick={this.pauseClock.bind(this)}>
+                    <img src="pause.svg" alt="" />
                   </button>
-                  )
-               : (
-                <button className="pause" onClick={this.pauseClock.bind(this)}>
-                  <img src="pause.svg" alt="" />
+                )}
+                <button className="stop" onClick={this.resetClock.bind(this)}>
+                  <img src="media-stop-button.svg" alt="" />
                 </button>
-              )}
-							<button className="stop" onClick={this.resetClock.bind(this)}>
-								<img src="media-stop-button.svg" alt="" />
-							</button>
-						</div>
-					</div>
-				</div>
-				<div className="output">
-					<div className="time">
-						<div className="waiting-time">
-							<span>Waiting Time :</span>
-							<label>{this.state.waitingTime} s</label>
-						</div>
-						<div className="turn-around-time">
-							<span>Turn around Time :</span>
-							<label>{this.state.turnAroundTime} s</label>
-						</div>
-					</div>
-					<div className="chart">
-						{ganttChart}
-					</div>
+              </div>
+            </div>
+          </div>
+        </div>
+				<button className="add" onClick={this.addProcess.bind(this)} style={{
+          backgroundColor: this.state.pause ? '#ccc' : '',  
+          color: this.state.pause ? '#ccc' : '',
+          border: this.state.pause ? '1px solid #ccc' : ''
+        }} 
+        disabled={this.state.pause}>
+					<span style={{
+            color: this.state.pause ? 'black' : ''
+          }}>Add</span>
+				</button>
+        <div className="output">
+          <div className="time">
+            <div className="waiting-time">
+              <span>Waiting Time :</span>
+              <label>{this.state.waitingTime} s</label>
+            </div>
+            <div className="turn-around-time">
+              <span>Turn around Time :</span>
+              <label>{this.state.turnAroundTime} s</label>
+            </div>
+          </div>
+          <div className="chart">
+            {ganttChart}
+          </div>
 				</div>
 			</div>
 		</section>
