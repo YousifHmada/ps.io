@@ -1,52 +1,5 @@
 function non_primitive_prority(input, cpuBurst, lastProcess){
 	var output = [];
-	if(cpuBurst == 0)return output;
-	let x = -1;
-	while(true)
-	{
-		if(lastProcess)
-		{
-			for (var i = 0; i < input.length; i++) {
-				if(input[i].key == lastProcess){	
-					x = i;
-					lastProcess = undefined;
-				};
-			}
-		}else{
-			x = x + 1;
-		}
-		if(input.length == 0)break;
-		var temp = input[x].reminder - cpuBurst;
-		if(temp < 0){
-			output.push(
-				{
-					key: input[x].key,
-					runTime: input[x].reminder
-				}
-			);
-			cpuBurst -= input[x].reminder;
-			input[x].reminder = 0;
-		}else{
-			input[x].reminder = temp;
-			output.push(
-				{
-					key: input[x].key,
-					runTime: cpuBurst
-				}
-			);
-			input[x].reminder = temp;
-			if(temp != 0)lastProcess = input[x].key;
-			break;
-		}
-	}
-	return {
-		output,
-		lastProcess
-	};
-}
-
-function non_primitive_prority(input, cpuBurst, lastProcess){
-	var output = [];
 	function selectedProceess(){
 		input = input.filter((cur)=>{
 			return cur.reminder != 0;
@@ -284,4 +237,12 @@ console.log(
 			10
 		)
 );
+
+module.exports = {
+	fcfs,
+	primitive_sjf,
+	non_primitive_sjf,
+	primitive_prority,
+	non_primitive_prority
+}
 

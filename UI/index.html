@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="A jouney of a thousand miles begins with asingle step." />
+
+	<title>Test</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	  crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="main.css">
+
+
+</head>
+
+<body>
+
+	<section class="UI">
+		<header>
+			<span>SCHEDULER</span>
+
+		</header>
+		<section class="input">
+			<div class="container">
+
+				<div class="table-content">
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">P</th>
+								<th scope="col">Arrival</th>
+								<th scope="col">CPU Brust</th>
+								<th scope="col">Priority</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">1</th>
+								<td>
+									<input type="text">
+								</td>
+								<td>
+									<input type="text">
+								</td>
+								<td>
+									<input type="text">
+									<button class="delete--btn">
+										<img src="close.svg" alt="">
+									</button>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">2</th>
+								<td>
+									<input type="text">
+								</td>
+								<td>
+									<input type="text">
+								</td>
+								<td>
+									<input type="text">
+									<button class="delete--btn">
+										<img src="close.svg" alt="">
+									</button>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">3</th>
+								<td>
+									<input type="text">
+								</td>
+								<td>
+									<input type="text">
+								</td>
+								<td>
+									<input type="text">
+									<button class="delete--btn">
+										<img src="close.svg" alt="">
+									</button>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+					<button class="add">ADD</button>
+				</div>
+
+				<div class="controller">
+					<div class="timer">
+						<label for="">7</label>
+						<button class="play-pause">
+							<img src="play-button.svg" alt="">
+						</button>
+						<button class="stop">
+							<img src="media-stop-button.svg" alt="">
+						</button>
+
+					</div>
+					<div class="type">
+						<select class="add__type">
+							<option value="FCFS" selected>FCFS</option>
+							<option value="RR">RR</option>
+							<option value="SJF">SJP</option>
+							<option value="SJF-P">SJF-Preemptive</option>
+							<option value="Priority">Priority</option>
+							<option value="Priority-p">Priority-Preemptive</option>
+
+						</select>
+					</div>
+
+					<button type="submit" class="submit">START</button>
+				</div>
+
+
+
+
+
+
+			</div>
+		</section>
+		<!-- 
+		<section class="output">
+
+		</section> -->
+	</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	  crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	  crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	  crossorigin="anonymous"></script>
+	<script src="script.js"></script>
+</body>
