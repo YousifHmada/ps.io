@@ -2,7 +2,7 @@ function non_primitive_prority(input, cpuBurst, lastProcess){
 	var output = [];
 	function selectedProceess(){
 		input = input.filter((cur)=>{
-			return cur.reminder != 0;
+			return cur.remainder != 0;
 		}).sort((prev, cur)=>{
 			return cur.priority >= prev.priority;
 		})
@@ -24,25 +24,25 @@ function non_primitive_prority(input, cpuBurst, lastProcess){
 			x = 0;
 		}
 		if(input.length == 0)break;
-		var temp = input[x].reminder - cpuBurst;
+		var temp = input[x].remainder - cpuBurst;
 		if(temp < 0){
 			output.push(
 				{
 					key: input[x].key,
-					runTime: input[x].reminder
+					runTime: input[x].remainder
 				}
 			);
-			cpuBurst -= input[x].reminder;
-			input[x].reminder = 0;
+			cpuBurst -= input[x].remainder;
+			input[x].remainder = 0;
 		}else{
-			input[x].reminder = temp;
+			input[x].remainder = temp;
 			output.push(
 				{
 					key: input[x].key,
 					runTime: cpuBurst
 				}
 			);
-			input[x].reminder = temp;
+			input[x].remainder = temp;
 			if(temp != 0)lastProcess = input[x].key;
 			break;
 		}
@@ -57,7 +57,7 @@ function primitive_prority(input, cpuBurst){
 	var output = [];
 	function selectedProceess(){
 		input = input.filter((cur)=>{
-			return cur.reminder != 0;
+			return cur.remainder != 0;
 		}).sort((prev, cur)=>{
 			return cur.priority >= prev.priority;
 		})
@@ -67,25 +67,25 @@ function primitive_prority(input, cpuBurst){
 	{
 		selectedProceess();
 		if(input.length == 0)break;
-		var temp = input[0].reminder - cpuBurst;
+		var temp = input[0].remainder - cpuBurst;
 		if(temp < 0){
 			output.push(
 				{
 					key: input[0].key,
-					runTime: input[0].reminder
+					runTime: input[0].remainder
 				}
 			);
-			cpuBurst -= input[0].reminder;
-			input[0].reminder = 0;
+			cpuBurst -= input[0].remainder;
+			input[0].remainder = 0;
 		}else{
-			input[0].reminder = temp;
+			input[0].remainder = temp;
 			output.push(
 				{
 					key: input[0].key,
 					runTime: cpuBurst
 				}
 			);
-			input[0].reminder = temp;
+			input[0].remainder = temp;
 			break;
 		}
 	}
@@ -96,9 +96,9 @@ function non_primitive_sjf(input, cpuBurst, lastProcess){
 	var output = [];
 	function selectedProceess(){
 		input = input.filter((cur)=>{
-			return cur.reminder != 0;
+			return cur.remainder != 0;
 		}).sort((prev, cur)=>{
-			return cur.reminder < prev.reminder;
+			return cur.remainder < prev.remainder;
 		})
 	};
 	if(cpuBurst == 0)return output;
@@ -118,25 +118,25 @@ function non_primitive_sjf(input, cpuBurst, lastProcess){
 			x = 0;
 		}
 		if(input.length == 0)break;
-		var temp = input[x].reminder - cpuBurst;
+		var temp = input[x].remainder - cpuBurst;
 		if(temp < 0){
 			output.push(
 				{
 					key: input[x].key,
-					runTime: input[x].reminder
+					runTime: input[x].remainder
 				}
 			);
-			cpuBurst -= input[x].reminder;
-			input[x].reminder = 0;
+			cpuBurst -= input[x].remainder;
+			input[x].remainder = 0;
 		}else{
-			input[x].reminder = temp;
+			input[x].remainder = temp;
 			output.push(
 				{
 					key: input[x].key,
 					runTime: cpuBurst
 				}
 			);
-			input[x].reminder = temp;
+			input[x].remainder = temp;
 			console.log(input[x]);
 			if(temp != 0)lastProcess = input[x].key;
 			break;
@@ -152,9 +152,9 @@ function primitive_sjf(input, cpuBurst){
 	var output = [];
 	function selectedProceess(){
 		input = input.filter((cur)=>{
-			return cur.reminder != 0;
+			return cur.remainder != 0;
 		}).sort((prev, cur)=>{
-			return cur.reminder < prev.reminder;
+			return cur.remainder < prev.remainder;
 		})
 	};
 	if(cpuBurst == 0)return output;
@@ -162,68 +162,54 @@ function primitive_sjf(input, cpuBurst){
 	{
 		selectedProceess();
 		if(input.length == 0)break;
-		var temp = input[0].reminder - cpuBurst;
+		var temp = input[0].remainder - cpuBurst;
 		if(temp < 0){
 			output.push(
 				{
 					key: input[0].key,
-					runTime: input[0].reminder
+					runTime: input[0].remainder
 				}
 			);
-			cpuBurst -= input[0].reminder;
-			input[0].reminder = 0;
+			cpuBurst -= input[0].remainder;
+			input[0].remainder = 0;
 		}else{
-			input[0].reminder = temp;
+			input[0].remainder = temp;
 			output.push(
 				{
 					key: input[0].key,
 					runTime: cpuBurst
 				}
 			);
-			input[0].reminder = temp;
+			input[0].remainder = temp;
 			break;
 		}
 	}
 	return {output};
 }
 
-function fcfs(input, cpuBurst, lastProcess){
+function fcfs(input, cpuBurst){
 	var output = [];
 	if(cpuBurst == 0)return output;
-	let x = 0;
-	if(lastProcess)
-	{
-		for (var i = 0; i < input.length; i++) {
-			if(input[i].key == lastProcess){	
-				x = i;
-				lastProcess = undefined;
-			};
-		}
-	}
-	while(true){
-		if(input.length == 0)break;
-		var temp = input[x].reminder - cpuBurst;
+	for (var i = 0; i < input.length; i++) {
+		var temp = input[i].remainder - cpuBurst;
 		if(temp < 0){
 			output.push(
 				{
-					key: input[x].key,
-					runTime: input[x].reminder
+					key: input[i].key,
+					runTime: input[i].remainder
 				}
 			);
-			cpuBurst -= input[x].reminder;
+			cpuBurst -= input[i].remainder;
 		}else{
-			input[x].reminder = temp;
+			input[i].remainder = temp;
 			output.push(
 				{
-					key: input[x].key,
+					key: input[i].key,
 					runTime: cpuBurst
 				}
 			);
 			break;
 		}
-		debugger;
-		x++;
-		x %= input.length;
 	}
 	return output;
 }
@@ -234,18 +220,18 @@ console.log(
 			  {
 			    'key': 1,
 			    'priority':5,
-			    'reminder':4
+			    'remainder':4
 			  
 			  },
 			  {
 			    'key': 2,
 			    'priority':6,
-			    'reminder':2
+			    'remainder':2
 			  },
 			  {
 			    'key': 3,
 			    'priority':2,
-			    'reminder':1
+			    'remainder':1
 			  }
 
 			],

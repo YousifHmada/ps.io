@@ -17,6 +17,8 @@ class App extends Component {
   		lastKey : -1,
   		method: 'FCFS',
   		state: 'reset',
+      waitingTime: 0,
+      turnAroundTime: 0,
   		step: 1,
   		counter: 0,
       pause: false,
@@ -35,7 +37,9 @@ class App extends Component {
   			arrival: 0,
 		    'priority':1,
 		    'cpu':0,
-		    'reminder':0,
+        'departure':0,
+        'falg': false,
+		    'remainder':0,
 		    'disabled':false
   		});
   		return {
@@ -46,7 +50,11 @@ class App extends Component {
   }
   downgradeProcess(id, amount, processes) {
   	for (var i = 0; i < processes.length; i++) {
-  		if(processes[i].key == id)processes[i].reminder -= amount;
+  		if(processes[i].key == id)processes[i].remainder -= amount;
+      if(processes[i].remainder == 0 && !processes[i].flag){
+        processes[i].flag = true;
+        processes[i].departure = this.state.counter + 1;
+      }
   	};
   }
   removeProcess(id) {
@@ -60,14 +68,14 @@ class App extends Component {
   		}
   	})
   }
-  handleInputChange(id, arrival, reminder, priority) {
+  handleInputChange(id, arrival, remainder, priority) {
   	for (var i = 0; i < this.state.processes.length; i++) {
   		if(this.state.processes[i].key == id){
   			this.setState((prev)=>{
 		  		var processes = prev.processes;
 		  		processes[i].arrival = +arrival;
-		  		processes[i].reminder = +reminder;
-		  		processes[i].cpu = +reminder;
+		  		processes[i].remainder = +remainder;
+		  		processes[i].cpu = +remainder;
 		  		processes[i].priority = +priority;
 		  		return {
 		  			processes
@@ -139,12 +147,35 @@ class App extends Component {
       }
     })
   }
+  updateTimes() {
+    this.setState((prev)=>{
+      let k = 0;
+      let waitingTime = prev.processes.reduce((aggr, cur)=>{
+          if(cur.departure != 0){
+            aggr += (cur.departure - cur.arrival - cur.cpu);
+            k++;
+          }
+          return aggr;
+        },0);
+      let turnAroundTime = prev.processes.reduce((aggr, cur)=>{
+          if(cur.departure != 0){
+            aggr += (cur.departure - cur.arrival);
+          }
+          return aggr;
+        },0);
+      return {
+        turnAroundTime: (k == 0) ? 0 : (turnAroundTime/ k),
+        waitingTime: (k == 0) ? 0 : (waitingTime/ k)
+      }
+    })
+  }
   startClock() {
   	this.startClicked();
   	this.setState(()=>{
   		return {
   			clock: setInterval(()=>{
-		  		this.runStep(this.state.step);		
+		  		this.runStep(this.state.step);	
+          this.updateTimes();	
 		  	},1000)
   		}
   	})
@@ -157,35 +188,66 @@ class App extends Component {
   	input = input.map(cur=>Object.assign({},cur));
   	var lastProcess = this.state.lastProcess;
   	let results;
-  	if(this.state.method == "FCFS")results = {output:fcfs(input, step, lastProcess), lastProcess: undefined};
-  	else if(this.state.method == "RR")results = {output:fcfs(input, step, lastProcess), lastProcess: undefined};
-  	else if(this.state.method == "SJF")results = non_primitive_sjf(input, step, lastProcess);
-  	else if(this.state.method == "SJF-P")results = primitive_sjf(input, step, lastProcess);
-  	else if(this.state.method == "Priority")results = non_primitive_prority(input, step, lastProcess);
-  	else if(this.state.method == "Priority-p")results = primitive_prority(input, step, lastProcess);
-  	this.updateProcesses(results, this.state.processes);
-  	console.log(results);
-  	this.setState((prev)=>{
-	  	let output = prev.output.concat(results.output);
-	  	output = output.reduce((acc, cur)=>{
-	  		if(cur.runTime == 0)return acc;
-	  		if(acc.length != 0){
-	  			if(acc[acc.length - 1].key == cur.key){
-	  				acc[acc.length - 1].runTime += cur.runTime;
-	  			}else{
-	  				acc.push(cur)
-	  			}
-	  		}else{
-	  			acc.push(cur)
-	  		}
-	  		return acc;
-	  	},[]);
-	  	console.log(output);
-  		return {
-  			counter: prev.counter + step,
-  			output
-  		}
-  	})
+    //el3el2 waleed
+    if (input.length == 0) {
+      this.setState((prev)=>{
+        var output = prev.output;
+        var lastKey = prev.lastKey + 1; 
+        output.push({
+          key: lastKey,
+          flag: true,
+          runTime: step
+        });
+        output = output.reduce((acc, cur)=>{
+          if(cur.runTime == 0)return acc;
+          if(acc.length != 0){
+            if(acc[acc.length - 1].flag && cur.flag){
+              acc[acc.length - 1].runTime += cur.runTime;
+            }else{
+              acc.push(cur)
+            }
+          }else{
+            acc.push(cur)
+          }
+          return acc;
+        },[]);
+        return {
+          counter: prev.counter + step,
+          output,
+          lastKey
+        }
+      });
+    }else{
+    	if(this.state.method == "FCFS")results = {output:fcfs(input.sort((prev, cur)=>{
+        return prev.arrival > cur.arrival;
+      }), step, lastProcess), lastProcess: undefined};
+    	else if(this.state.method == "RR")results = {output:fcfs(input, step, lastProcess), lastProcess: undefined};
+    	else if(this.state.method == "SJF")results = non_primitive_sjf(input, step, lastProcess);
+    	else if(this.state.method == "SJF-P")results = primitive_sjf(input, step, lastProcess);
+    	else if(this.state.method == "Priority")results = non_primitive_prority(input, step, lastProcess);
+    	else if(this.state.method == "Priority-p")results = primitive_prority(input, step, lastProcess);
+    	this.updateProcesses(results, this.state.processes);
+    	this.setState((prev)=>{
+  	  	let output = prev.output.concat(results.output);
+  	  	output = output.reduce((acc, cur)=>{
+  	  		if(cur.runTime == 0)return acc;
+  	  		if(acc.length != 0){
+  	  			if(acc[acc.length - 1].key == cur.key){
+  	  				acc[acc.length - 1].runTime += cur.runTime;
+  	  			}else{
+  	  				acc.push(cur)
+  	  			}
+  	  		}else{
+  	  			acc.push(cur)
+  	  		}
+  	  		return acc;
+  	  	},[]);
+    		return {
+    			counter: prev.counter + step,
+    			output
+    		}
+    	})
+    }
   }
   render() {
     var colors = [
@@ -207,14 +269,14 @@ class App extends Component {
       return colors[i];
     }
   	var processes = this.state.processes.map((cur)=>{
-  		function onChangeReminder(event) {
+  		function onChangeremainder(event) {
   			this.handleInputChange(cur.key, cur.arrival, event.target.value, cur.priority);
   		}
   		function onChangePriority(event) {
-  			this.handleInputChange(cur.key, cur.arrival, cur.reminder, event.target.value);
+  			this.handleInputChange(cur.key, cur.arrival, cur.remainder, event.target.value);
   		}
   		function onChangeArrival(event) {
-  			this.handleInputChange(cur.key, event.target.value, cur.reminder, cur.priority);
+  			this.handleInputChange(cur.key, event.target.value, cur.remainder, cur.priority);
   		}
   		function onDelete() {
   			this.removeProcess(cur.key);
@@ -226,7 +288,7 @@ class App extends Component {
 					<input type="text" value={cur.arrival} onChange={onChangeArrival.bind(this)} disabled={cur.disabled}/>
 				</td>
 				<td>
-					<input type="text" value={cur.reminder} onChange={onChangeReminder.bind(this)} disabled={cur.disabled}/>
+					<input type="text" value={cur.remainder} onChange={onChangeremainder.bind(this)} disabled={cur.disabled}/>
 				</td>
 				<td>
 					<input type="text" value={cur.priority} onChange={onChangePriority.bind(this)} disabled={cur.disabled}/>
@@ -246,8 +308,8 @@ class App extends Component {
      startTime += cur.runTime;
      return (
       <div className="process" key={cur.key} style={{flex: (cur.runTime / counter)}}>
-        <label className="key">P{cur.key}</label>
-        <span style={{background: getColor()}}></span>
+        <label className="key">{(cur.flag) ? '' : 'P'+ cur.key}</label>
+        <span style={{background: (cur.flag) ? '#ccc' : getColor()}}></span>
         <label className="start-time">{endTime}</label>
         {
           ((index+1) == this.state.output.length && false) ? (
@@ -301,7 +363,7 @@ class App extends Component {
 						</select>
 					</div>
 					<div className="timer">
-						<label for="">{this.state.step}</label>
+						<label for="">{this.state.counter}</label>
 						<div>
 							{!this.state.pause ? 
                   (     
@@ -324,11 +386,11 @@ class App extends Component {
 					<div className="time">
 						<div className="waiting-time">
 							<span>Waiting Time :</span>
-							<label>13 s</label>
+							<label>{this.state.waitingTime} s</label>
 						</div>
 						<div className="turn-around-time">
 							<span>Turn around Time :</span>
-							<label>17 s</label>
+							<label>{this.state.turnAroundTime} s</label>
 						</div>
 					</div>
 					<div className="chart">
