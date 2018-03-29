@@ -15,7 +15,7 @@ function non_primitive_prority(input, cpuBurst, lastProcess){
 		{
 			for (var i = 0; i < input.length; i++) {
 				if(input[i].key == lastProcess){	
-					x = i;
+					x = i;	
 					lastProcess = undefined;
 				};
 			}
@@ -187,29 +187,43 @@ function primitive_sjf(input, cpuBurst){
 	return {output};
 }
 
-function fcfs(input, cpuBurst){
+function fcfs(input, cpuBurst, lastProcess){
 	var output = [];
 	if(cpuBurst == 0)return output;
-	for (var i = 0; i < input.length; i++) {
-		var temp = input[i].reminder - cpuBurst;
+	let x = 0;
+	if(lastProcess)
+	{
+		for (var i = 0; i < input.length; i++) {
+			if(input[i].key == lastProcess){	
+				x = i;
+				lastProcess = undefined;
+			};
+		}
+	}
+	while(true){
+		if(input.length == 0)break;
+		var temp = input[x].reminder - cpuBurst;
 		if(temp < 0){
 			output.push(
 				{
-					key: input[i].key,
-					runTime: input[i].reminder
+					key: input[x].key,
+					runTime: input[x].reminder
 				}
 			);
-			cpuBurst -= input[i].reminder;
+			cpuBurst -= input[x].reminder;
 		}else{
-			input[i].reminder = temp;
+			input[x].reminder = temp;
 			output.push(
 				{
-					key: input[i].key,
+					key: input[x].key,
 					runTime: cpuBurst
 				}
 			);
 			break;
 		}
+		debugger;
+		x++;
+		x %= input.length;
 	}
 	return output;
 }

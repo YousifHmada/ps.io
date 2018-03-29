@@ -19,6 +19,7 @@ class App extends Component {
   		state: 'reset',
   		step: 1,
   		counter: 0,
+      pause: false,
   		lastProcess: undefined,
   		output: [],
   		processes: [],
@@ -91,7 +92,8 @@ class App extends Component {
   			cur.disabled = true;
   		});
   		return {
-  			processes
+  			processes,
+        pause: true
   		}
   	})	
   }
@@ -122,10 +124,20 @@ class App extends Component {
   			state: 'reset',
   			clock: undefined,
   			output: [],
+        pause: false,
   			processes: this.state.firstCapture,
   			firstCapture : []
   		}
   	})
+  }
+  pauseClock() {
+    clearInterval(this.state.clock);
+    this.setState(()=>{
+      return {
+        clock: undefined,
+        pause: false
+      }
+    })
   }
   startClock() {
   	this.startClicked();
@@ -138,10 +150,10 @@ class App extends Component {
   	})
   }
   runStep(step) {
-  	var input = this.state.processes.slice();
-  	input = input.filter((cur)=>{
-  		return cur.arrival <= this.state.counter
-  	}).filter((cur)=>cur.remainder != 0);
+    var input = this.state.processes.slice();
+    input = input.filter((cur)=>{
+      return cur.arrival <= this.state.counter
+    }).filter((cur)=>cur.remainder != 0);
   	input = input.map(cur=>Object.assign({},cur));
   	var lastProcess = this.state.lastProcess;
   	let results;
@@ -176,6 +188,24 @@ class App extends Component {
   	})
   }
   render() {
+    var colors = [
+      '#375a7f',
+      '#b72a67',
+      '#fa9856',
+      '#8559a5',
+      '#e95280',
+      '#e8751a',
+      '#35c2bd',
+      '#7e6752',
+      '#6ba083',
+      '#669b7'
+    ]
+    var i = -1;
+    function getColor() {
+      i++;
+      i = i%colors.length;
+      return colors[i];
+    }
   	var processes = this.state.processes.map((cur)=>{
   		function onChangeReminder(event) {
   			this.handleInputChange(cur.key, cur.arrival, event.target.value, cur.priority);
@@ -209,10 +239,28 @@ class App extends Component {
 			</tr>
   		)
   	})
+    var startTime = 0;
+    var counter = this.state.output.reduce((aggr, cur)=>aggr+=cur.runTime,0);
+    var ganttChart = this.state.output.map((cur, index)=>{
+     let endTime = startTime;
+     startTime += cur.runTime;
+     return (
+      <div className="process" key={cur.key} style={{flex: (cur.runTime / counter)}}>
+        <label className="key">P{cur.key}</label>
+        <span style={{background: getColor()}}></span>
+        <label className="start-time">{endTime}</label>
+        {
+          ((index+1) == this.state.output.length && false) ? (
+            <label className="end-time">{counter}</label>
+          ) : ''
+        }
+      </div>
+     )
+    })
     return (
       	<section className="UI">
 		<header>
-			<span>SCHEDULER</span>
+      <span>Scheduler</span>
 		</header>
 		<section className="input">
 			<div className="container">
@@ -230,29 +278,62 @@ class App extends Component {
 							{processes}
 						</tbody>
 					</table>
-					<button className="add" onClick={this.addProcess.bind(this)}>ADD</button>
 				</div>
 				<div className="controller">
-					<div className="timer">
-						<label for="">{this.state.step}</label>
-						<button className="play-pause" onClick={this.startClock.bind(this)}>
-							<img src="play-button.svg" alt=""/>
-						</button>
-						<button className="stop" onClick={this.resetClock.bind(this)}>
-							<img src="media-stop-button.svg" alt=""/>
-						</button>
-					</div>
+					<button className="add" onClick={this.addProcess.bind(this)} style={{
+            backgroundColor: this.state.pause ? '#ccc' : '',  
+            color: this.state.pause ? '#ccc' : '',
+            border: this.state.pause ? '1px solid #ccc' : ''
+          }} 
+          disabled={this.state.pause}>
+						<span style={{
+              color: this.state.pause ? 'black' : ''
+            }}>+</span>
+					</button>
 					<div className="type">
-						<select className="add__type" onChange={this.methodChanged.bind(this)}>
+						<select onChange={this.methodChanged.bind(this)}>
 							<option value="FCFS" selected>FCFS</option>
 							<option value="RR">RR</option>
-							<option value="SJF">SJP</option>
+							<option value="SJF">SJF</option>
 							<option value="SJF-P">SJF-Preemptive</option>
 							<option value="Priority">Priority</option>
 							<option value="Priority-p">Priority-Preemptive</option>
 						</select>
 					</div>
-					<button type="submit" className="submit" onClick={this.startClicked.bind(this)}>START</button>
+					<div className="timer">
+						<label for="">{this.state.step}</label>
+						<div>
+							{!this.state.pause ? 
+                  (     
+                  <button className="play" onClick={this.startClock.bind(this)}>
+                    <img src="play-button.svg" alt="" />
+                  </button>
+                  )
+               : (
+                <button className="pause" onClick={this.pauseClock.bind(this)}>
+                  <img src="pause.svg" alt="" />
+                </button>
+              )}
+							<button className="stop" onClick={this.resetClock.bind(this)}>
+								<img src="media-stop-button.svg" alt="" />
+							</button>
+						</div>
+					</div>
+				</div>
+				<div className="output">
+					<div className="time">
+						<div className="waiting-time">
+							<span>Waiting Time :</span>
+							<label>13 s</label>
+						</div>
+						<div className="turn-around-time">
+							<span>Turn around Time :</span>
+							<label>17 s</label>
+						</div>
+					</div>
+					<div className="chart">
+						{ganttChart}
+					</div>
 				</div>
 			</div>
 		</section>
