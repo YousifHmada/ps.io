@@ -89,7 +89,7 @@ function primitive_prority(input, cpuBurst){
 			break;
 		}
 	}
-	return output;
+	return {output};
 }
 
 function non_primitive_sjf(input, cpuBurst, lastProcess){
@@ -137,6 +137,7 @@ function non_primitive_sjf(input, cpuBurst, lastProcess){
 				}
 			);
 			input[x].reminder = temp;
+			console.log(input[x]);
 			if(temp != 0)lastProcess = input[x].key;
 			break;
 		}
@@ -183,7 +184,7 @@ function primitive_sjf(input, cpuBurst){
 			break;
 		}
 	}
-	return output;
+	return {output};
 }
 
 function fcfs(input, cpuBurst){
@@ -234,7 +235,8 @@ console.log(
 			  }
 
 			],
-			10
+			10,
+			1
 		)
 );
 

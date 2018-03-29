@@ -17,7 +17,7 @@ class App extends Component {
   		lastKey : -1,
   		method: 'FCFS',
   		state: 'reset',
-  		step: 5,
+  		step: 1,
   		counter: 0,
   		lastProcess: undefined,
   		output: [],
