@@ -411,7 +411,7 @@ class App extends Component {
 							<option value="Priority-p">Priority-Preemptive</option>
 						</select>
 					</div>
-					<input type="text" disabled={this.state.pause} style={{display: (this.state.method == 'RR') ? '' : 'none'}} className = "quantum " onChange={this.quantumChanged.bind(this)}  placeholder = "Quantum" />
+					<input type="text" disabled={this.state.state != 'reset'} style={{display: (this.state.method == 'RR') ? '' : 'none',backgroundColor: (this.state.state != 'reset') ? '#ccc' : ''}} className = "quantum " onChange={this.quantumChanged.bind(this)}  placeholder = "Quantum" />
           
 					<div className="timer">
 						<label>{this.state.counter}</label>
