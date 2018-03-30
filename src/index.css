@@ -102,7 +102,15 @@ header span {
     padding-left: 5px;
     border: none;
 }
-
+.no-spinners {
+    -moz-appearance:textfield;
+  }
+  
+  .no-spinners::-webkit-outer-spin-button,
+  .no-spinners::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
 /*--------------------------------------------------------------------*/
 
@@ -228,7 +236,8 @@ tr:hover .delete--btn {
 .delete--btn:active,
 .add:active,
 .submit:active,
-.play-pause:active,
+.play:active,
+.pause:active,
 .stop:active {
     background-color: #f755a0;
 }
@@ -249,10 +258,21 @@ tr:hover .delete--btn {
     background-color: transparent;
     color:#364f6bec;
     border: 1px solid #364f6bad;
+    font-weight: 700;
+    font-size: 14px;
     
     
 }
-
+.quantum{
+    width: 100px;
+    height: 30px;
+    background-color: transparent;
+    color:#364f6bec;
+    border: 1px solid #364f6bad;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center
+}
 /*---------------------------------------*/
 
  .time{
@@ -267,9 +287,11 @@ tr:hover .delete--btn {
 .time span{
     color:#364f6bec; 
     font-weight:600;
+    font-size: 14px;
 }
 .time label{
     color: #4b6685d8;
+    font-size: 12px;
 }
 .chart{
     display: flex;
