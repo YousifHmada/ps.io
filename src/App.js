@@ -296,13 +296,13 @@ class App extends Component {
   			<tr key={cur.key}>
 				<th scope="row">{cur.key}</th>
 				<td>
-					<input type="text" value={cur.arrival} onChange={onChangeArrival.bind(this)} disabled={cur.disabled}/>
+					<input type="text" type="number" className="no-spinners" value={cur.arrival} onChange={onChangeArrival.bind(this)} disabled={cur.disabled}/>
 				</td>
 				<td>
-					<input type="text" value={cur.remainder} onChange={onChangeremainder.bind(this)} disabled={cur.disabled}/>
+					<input type="text" type="number" className="no-spinners" value={cur.remainder} onChange={onChangeremainder.bind(this)} disabled={cur.disabled}/>
 				</td>
 				<td>
-					<input type="text" value={cur.priority} onChange={onChangePriority.bind(this)} disabled={cur.disabled}/>
+					<input type="text" type="number" className="no-spinners" value={cur.priority} onChange={onChangePriority.bind(this)} disabled={cur.disabled}/>
 					{cur.disabled ? '' : (
 						<button className="delete--btn" onClick={onDelete.bind(this)}>
 							<img src="close.svg" alt=""/>
@@ -373,6 +373,8 @@ class App extends Component {
 							<option value="Priority-p">Priority-Preemptive</option>
 						</select>
 					</div>
+					<input type="text" className = "quantum no-spinners" type="number"  placeholder = "Q" />
+          
 					<div className="timer">
 						<label>{this.state.counter}</label>
 						<div>
@@ -396,11 +398,11 @@ class App extends Component {
 				<div className="output">
 					<div className="time">
 						<div className="waiting-time">
-							<span>Waiting Time :</span>
+							<span>Waiting Time : </span>
 							<label>{this.state.waitingTime} s</label>
 						</div>
 						<div className="turn-around-time">
-							<span>Turn around Time :</span>
+							<span>Turn around Time : </span>
 							<label>{this.state.turnAroundTime} s</label>
 						</div>
 					</div>
