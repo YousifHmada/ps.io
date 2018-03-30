@@ -23,6 +23,7 @@ class App extends Component {
       turnAroundTime: 0,
       step: 1,
       counter: 0,
+      quantum: 1,
       pause: false,
       lastProcess: undefined,
       output: [],
@@ -159,6 +160,12 @@ class App extends Component {
       }
     })
   }
+  quantumChanged(event) {
+    let temp = event.target.value;
+    this.setState(()=>{
+      return {quantum: +temp}
+    });
+  }
   updateTimes() {
     this.setState((prev)=>{
       let k = 0;
@@ -235,7 +242,7 @@ class App extends Component {
       }), step, lastProcess), lastProcess: undefined};
       else if(this.state.method == "RR")results = {output:roundrobin(input.sort((prev, cur)=>{
         return prev.arrival > cur.arrival;
-      }), 2, lastProcess), lastProcess: undefined};
+      }), this.state.quantum, lastProcess), lastProcess: undefined};
       else if(this.state.method == "SJF")results = non_primitive_sjf(input, step, lastProcess);
       else if(this.state.method == "SJF-P")results = primitive_sjf(input, step, lastProcess);
       else if(this.state.method == "Priority")results = non_primitive_prority(input, step, lastProcess);
@@ -296,13 +303,13 @@ class App extends Component {
   			<tr key={cur.key}>
 				<th scope="row">{cur.key}</th>
 				<td>
-					<input type="text" type="number" className="no-spinners" value={cur.arrival} onChange={onChangeArrival.bind(this)} disabled={cur.disabled}/>
+					<input type="text" value={cur.arrival} onChange={onChangeArrival.bind(this)} disabled={cur.disabled}/>
 				</td>
 				<td>
-					<input type="text" type="number" className="no-spinners" value={cur.remainder} onChange={onChangeremainder.bind(this)} disabled={cur.disabled}/>
+					<input type="text" value={cur.remainder} onChange={onChangeremainder.bind(this)} disabled={cur.disabled}/>
 				</td>
 				<td>
-					<input type="text" type="number" className="no-spinners" value={cur.priority} onChange={onChangePriority.bind(this)} disabled={cur.disabled}/>
+					<input type="text" value={cur.priority} onChange={onChangePriority.bind(this)} disabled={cur.disabled}/>
 					{cur.disabled ? '' : (
 						<button className="delete--btn" onClick={onDelete.bind(this)}>
 							<img src="close.svg" alt=""/>
@@ -373,7 +380,7 @@ class App extends Component {
 							<option value="Priority-p">Priority-Preemptive</option>
 						</select>
 					</div>
-					<input type="text" className = "quantum no-spinners" type="number"  placeholder = "Q" />
+					<input type="text" disabled={this.state.pause} style={{display: (this.state.method == 'RR') ? '' : 'none'}} className = "quantum " onChange={this.quantumChanged.bind(this)}  placeholder = "Quantum" />
           
 					<div className="timer">
 						<label>{this.state.counter}</label>
