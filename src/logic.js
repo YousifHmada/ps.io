@@ -4,7 +4,7 @@ function non_primitive_prority(input, cpuBurst, lastProcess){
 		input = input.filter((cur)=>{
 			return cur.remainder != 0;
 		}).sort((prev, cur)=>{
-			return cur.priority >= prev.priority;
+			return cur.priority > prev.priority;
 		})
 	};
 	if(cpuBurst == 0)return output;
@@ -59,7 +59,7 @@ function primitive_prority(input, cpuBurst){
 		input = input.filter((cur)=>{
 			return cur.remainder != 0;
 		}).sort((prev, cur)=>{
-			return cur.priority >= prev.priority;
+			return cur.priority > prev.priority;
 		})
 	};
 	if(cpuBurst == 0)return output;

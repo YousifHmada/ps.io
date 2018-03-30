@@ -15,6 +15,7 @@ class App extends Component {
   	super();
   	this.state = {
   		lastKey : -1,
+      lastKeyNull : -1,
   		method: 'FCFS',
   		state: 'reset',
       waitingTime: 0,
@@ -59,12 +60,18 @@ class App extends Component {
   }
   removeProcess(id) {
   	var processes = [];
+    var x = 0;
   	for (var i = 0; i < this.state.processes.length; i++) {
-  		if(this.state.processes[i].key != id)processes.push(this.state.processes[i]);
+  		if(this.state.processes[i].key != id){
+        this.state.processes[i].key = x;
+        processes.push(this.state.processes[i]);
+        x++;
+      }
   	};
   	this.setState((prev)=>{
   		return {
-  			processes
+  			processes,
+        lastKey: x - 1
   		}
   	})
   }
@@ -134,7 +141,11 @@ class App extends Component {
   			output: [],
         pause: false,
   			processes: this.state.firstCapture,
-  			firstCapture : []
+        lastKey: this.state.firstCapture.length != 0 ? this.state.firstCapture[this.state.firstCapture.length - 1].key : -1,
+  			firstCapture : [],
+        waitingTime: 0,
+        turnAroundTime: 0,
+        lastKeyNull: -1
   		}
   	})
   }
@@ -192,9 +203,9 @@ class App extends Component {
     if (input.length == 0) {
       this.setState((prev)=>{
         var output = prev.output;
-        var lastKey = prev.lastKey + 1; 
+        var lastKeyNull = prev.lastKeyNull + 1; 
         output.push({
-          key: lastKey,
+          key: '#' + lastKeyNull,
           flag: true,
           runTime: step
         });
@@ -214,7 +225,7 @@ class App extends Component {
         return {
           counter: prev.counter + step,
           output,
-          lastKey
+          lastKeyNull
         }
       });
     }else{
@@ -262,11 +273,8 @@ class App extends Component {
       '#6ba083',
       '#669b7'
     ]
-    var i = -1;
-    function getColor() {
-      i++;
-      i = i%colors.length;
-      return colors[i];
+    function getColor(key) {
+      return colors[key%colors.length];
     }
   	var processes = this.state.processes.map((cur)=>{
   		function onChangeremainder(event) {
@@ -309,7 +317,7 @@ class App extends Component {
      return (
       <div className="process" key={cur.key} style={{flex: (cur.runTime / counter)}}>
         <label className="key">{(cur.flag) ? '' : 'P'+ cur.key}</label>
-        <span style={{background: (cur.flag) ? '#ccc' : getColor()}}></span>
+        <span style={{background: (cur.flag) ? '#ccc' : getColor(cur.key)}}></span>
         <label className="start-time">{endTime}</label>
         {
           ((index+1) == this.state.output.length && false) ? (
@@ -363,7 +371,7 @@ class App extends Component {
 						</select>
 					</div>
 					<div className="timer">
-						<label for="">{this.state.counter}</label>
+						<label>{this.state.counter}</label>
 						<div>
 							{!this.state.pause ? 
                   (     
