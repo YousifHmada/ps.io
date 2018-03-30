@@ -402,7 +402,7 @@ class App extends Component {
                 <option value="Priority-p">Priority-Preemptive</option>
               </select>
             </div>
-                <input type="text" className = "quantum no-spinners" type="number"  placeholder = "Quantum" />
+                <input disabled={this.state.state != 'reset'} type="text" className = "quantum no-spinners" type="number"  onChange={this.quantumChanged.bind(this)} placeholder = "Quantum" />
             <div className="timer">
               <label>{this.state.counter}</label>
               <div>
