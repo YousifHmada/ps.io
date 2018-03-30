@@ -1,3 +1,33 @@
+var turn = 0;
+var remaining_quantum = 0 ;
+function roundrobin(input,Quantum){
+    var output = [];
+    if (remaining_quantum == 0)
+        {
+            remaining_quantum = Quantum;
+        }
+    input[turn].remainder --;
+    remaining_quantum --;
+    output.push(
+        {
+            key:input[turn].key,
+            runTime:1
+        }
+    );
+    if(remaining_quantum == 0 && input[turn].remainder != 0)
+        {
+            remaining_quantum = Quantum;
+            debugger;
+            turn ++;
+            turn %= input.length;
+        }
+    else if (input[turn].remainder == 0)
+        {
+            remaining_quantum = Quantum;
+        }
+    return output;
+}
+
 function non_primitive_prority(input, cpuBurst, lastProcess){
 	var output = [];
 	function selectedProceess(){
@@ -214,36 +244,13 @@ function fcfs(input, cpuBurst){
 	return output;
 }
 
-console.log(
-		non_primitive_sjf(
-			[
-			  {
-			    'key': 1,
-			    'priority':5,
-			    'remainder':4
-			  
-			  },
-			  {
-			    'key': 2,
-			    'priority':6,
-			    'remainder':2
-			  },
-			  {
-			    'key': 3,
-			    'priority':2,
-			    'remainder':1
-			  }
-
-			],
-			10,
-			1
-		)
-);
 
 module.exports = {
 	fcfs,
 	primitive_sjf,
 	non_primitive_sjf,
 	primitive_prority,
-	non_primitive_prority
+	non_primitive_prority,
+	roundrobin
 }
+
