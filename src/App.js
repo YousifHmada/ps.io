@@ -6,7 +6,8 @@ import {
   primitive_sjf,
   non_primitive_sjf,
   primitive_prority,
-  non_primitive_prority
+  non_primitive_prority,
+  roundrobin
 } from './logic.js';
 
 
@@ -14,7 +15,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      lastKey : -1,
+      lastKey : 2,
       lastKeyNull : -1,
       method: 'FCFS',
       state: 'reset',
@@ -22,10 +23,42 @@ class App extends Component {
       turnAroundTime: 0,
       step: 1,
       counter: 0,
+      quantum: 1,
       pause: false,
       lastProcess: undefined,
       output: [],
-      processes: [],
+      processes: [
+        {
+          key: 0,
+          arrival: 0,
+          'priority':1,
+          'cpu':0,
+          'departure':0,
+          'falg': false,
+          'remainder':0,
+          'disabled':false
+        },
+        {
+          key: 1,
+          arrival: 0,
+          'priority':1,
+          'cpu':0,
+          'departure':0,
+          'falg': false,
+          'remainder':0,
+          'disabled':false
+        },
+        {
+          key: 2,
+          arrival: 0,
+          'priority':1,
+          'cpu':0,
+          'departure':0,
+          'falg': false,
+          'remainder':0,
+          'disabled':false
+        }
+      ],
       firstCapture: []
     }
   }
@@ -158,6 +191,12 @@ class App extends Component {
       }
     })
   }
+  quantumChanged(event) {
+    let temp = event.target.value;
+    this.setState(()=>{
+      return {quantum: +temp}
+    });
+  }
   updateTimes() {
     this.setState((prev)=>{
       let k = 0;
@@ -232,7 +271,9 @@ class App extends Component {
       if(this.state.method == "FCFS")results = {output:fcfs(input.sort((prev, cur)=>{
         return prev.arrival > cur.arrival;
       }), step, lastProcess), lastProcess: undefined};
-      else if(this.state.method == "RR")results = {output:fcfs(input, step, lastProcess), lastProcess: undefined};
+      else if(this.state.method == "RR")results = {output:roundrobin(input.sort((prev, cur)=>{
+        return prev.arrival > cur.arrival;
+      }), this.state.quantum, lastProcess), lastProcess: undefined};
       else if(this.state.method == "SJF")results = non_primitive_sjf(input, step, lastProcess);
       else if(this.state.method == "SJF-P")results = primitive_sjf(input, step, lastProcess);
       else if(this.state.method == "Priority")results = non_primitive_prority(input, step, lastProcess);
