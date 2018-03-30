@@ -235,12 +235,11 @@ class App extends Component {
       }), step, lastProcess), lastProcess: undefined};
       else if(this.state.method == "RR")results = {output:roundrobin(input.sort((prev, cur)=>{
         return prev.arrival > cur.arrival;
-      }), step, lastProcess), lastProcess: undefined};
+      }), 2, lastProcess), lastProcess: undefined};
       else if(this.state.method == "SJF")results = non_primitive_sjf(input, step, lastProcess);
       else if(this.state.method == "SJF-P")results = primitive_sjf(input, step, lastProcess);
       else if(this.state.method == "Priority")results = non_primitive_prority(input, step, lastProcess);
       else if(this.state.method == "Priority-p")results = primitive_prority(input, step, lastProcess);
-      console.log(results);
       this.updateProcesses(results, this.state.processes);
       this.setState((prev)=>{
         let output = prev.output.concat(results.output);
