@@ -7,7 +7,8 @@ import {
   non_primitive_sjf,
   primitive_prority,
   non_primitive_prority,
-  roundrobin
+  roundrobin,
+  resetQuantum
 } from './logic.js';
 
 
@@ -165,6 +166,7 @@ class App extends Component {
     })
   }
   resetClock() {
+    resetQuantum();
     clearInterval(this.state.clock);
     this.setState(()=>{
       return {
