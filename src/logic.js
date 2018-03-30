@@ -2,6 +2,10 @@ var turn = 0;
 var remaining_quantum = 0 ;
 function roundrobin(input,Quantum){
     var output = [];
+    if (input.length == 1)
+    {
+    	turn = 0;
+    }
     if (remaining_quantum == 0)
         {
             remaining_quantum = Quantum;
