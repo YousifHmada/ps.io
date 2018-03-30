@@ -1,7 +1,13 @@
 var turn = 0;
 var remaining_quantum = 0 ;
+
+function resetQuantum() {
+	remaining_quantum = 0;
+}
+
 function roundrobin(input,Quantum){
     var output = [];
+    turn %= input.length;
     if (input.length == 1)
     {
     	turn = 0;
@@ -23,7 +29,6 @@ function roundrobin(input,Quantum){
             remaining_quantum = Quantum;
             debugger;
             turn ++;
-            turn %= input.length;
         }
     else if (input[turn].remainder == 0)
         {
@@ -45,7 +50,7 @@ function non_primitive_prority(input, cpuBurst, lastProcess){
 	while(true)
 	{
 		let x;
-		if(lastProcess)
+		if(lastProcess != undefined)
 		{
 			for (var i = 0; i < input.length; i++) {
 				if(input[i].key == lastProcess){	
@@ -127,6 +132,7 @@ function primitive_prority(input, cpuBurst){
 }
 
 function non_primitive_sjf(input, cpuBurst, lastProcess){
+	debugger;
 	var output = [];
 	function selectedProceess(){
 		input = input.filter((cur)=>{
@@ -139,7 +145,7 @@ function non_primitive_sjf(input, cpuBurst, lastProcess){
 	while(true)
 	{
 		let x;
-		if(lastProcess)
+		if(lastProcess != undefined)
 		{
 			for (var i = 0; i < input.length; i++) {
 				if(input[i].key == lastProcess){	
@@ -176,6 +182,7 @@ function non_primitive_sjf(input, cpuBurst, lastProcess){
 			break;
 		}
 	}
+	debugger;
 	return {
 		output,
 		lastProcess
@@ -255,6 +262,6 @@ module.exports = {
 	non_primitive_sjf,
 	primitive_prority,
 	non_primitive_prority,
-	roundrobin
+	roundrobin,
+	resetQuantum
 }
-

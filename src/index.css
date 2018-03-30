@@ -13,10 +13,8 @@ body {
 
 /* window styles */
 .UI {
-    margin-top: 20px;
     width: 550px;
     height: auto;
-    border: 1px solid #ccc;
     border-radius: 5px;
     padding-bottom: 20px;
     background-color: #233142;
@@ -211,7 +209,7 @@ tr:hover .delete--btn {
     height: 100%;
     border: 1px solid #e3e3e31c;
     color: #e3e3e3f3;
-    background-color: #e3e3e31a;
+    background-color: rgba(227, 227, 227, 0.027);
     text-align: center;
     font-weight: 700;
     

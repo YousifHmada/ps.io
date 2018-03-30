@@ -369,7 +369,7 @@ class App extends Component {
      )
     })
     return (
-      	<section className="UI">
+      	
 		<header>
       <span>Scheduler</span>
 		</header>
@@ -380,7 +380,7 @@ class App extends Component {
   					<table className="table">
   						<thead>
   							<tr>
-  								<th scope="col">P</th>
+  								<th scope="col">PP</th>
   								<th scope="col">Arrival</th>
   								<th scope="col">{this.state.state == 'reset' ? 'CPU Brust' : 'Remainder'}</th>
   								<th scope="col">Priority</th>
@@ -452,7 +452,7 @@ class App extends Component {
 				</div>
 			</div>
 		</section>
-	</section>
+	
     );
   }
 }
