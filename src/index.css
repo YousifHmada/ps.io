@@ -2,9 +2,6 @@
     margin: 0%;
     padding: 0%;
 }
-@font-face {
-    font-family: "Another day in Paradise";
-}
 body {
     display: flex;
     align-items: center;

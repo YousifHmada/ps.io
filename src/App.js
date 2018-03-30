@@ -2,152 +2,152 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {
-	fcfs,
-	primitive_sjf,
-	non_primitive_sjf,
-	primitive_prority,
-	non_primitive_prority
+  fcfs,
+  primitive_sjf,
+  non_primitive_sjf,
+  primitive_prority,
+  non_primitive_prority
 } from './logic.js';
 
 
 class App extends Component {
   constructor() {
-  	super();
-  	this.state = {
-  		lastKey : -1,
+    super();
+    this.state = {
+      lastKey : -1,
       lastKeyNull : -1,
-  		method: 'FCFS',
-  		state: 'reset',
+      method: 'FCFS',
+      state: 'reset',
       waitingTime: 0,
       turnAroundTime: 0,
-  		step: 1,
-  		counter: 0,
+      step: 1,
+      counter: 0,
       pause: false,
-  		lastProcess: undefined,
-  		output: [],
-  		processes: [],
-  		firstCapture: []
-  	}
+      lastProcess: undefined,
+      output: [],
+      processes: [],
+      firstCapture: []
+    }
   }
   addProcess = ()=>{
-  	this.setState((prev)=>{
-  		var processes = prev.processes;
-  		var lastKey = prev.lastKey + 1;
-  		processes.push({
-  			key: lastKey,
-  			arrival: 0,
-		    'priority':1,
-		    'cpu':0,
+    this.setState((prev)=>{
+      var processes = prev.processes;
+      var lastKey = prev.lastKey + 1;
+      processes.push({
+        key: lastKey,
+        arrival: 0,
+        'priority':1,
+        'cpu':0,
         'departure':0,
         'falg': false,
-		    'remainder':0,
-		    'disabled':false
-  		});
-  		return {
-  			processes,
-  			lastKey
-  		}
-  	})
+        'remainder':0,
+        'disabled':false
+      });
+      return {
+        processes,
+        lastKey
+      }
+    })
   }
   downgradeProcess(id, amount, processes) {
-  	for (var i = 0; i < processes.length; i++) {
-  		if(processes[i].key == id)processes[i].remainder -= amount;
+    for (var i = 0; i < processes.length; i++) {
+      if(processes[i].key == id)processes[i].remainder -= amount;
       if(processes[i].remainder == 0 && !processes[i].flag){
         processes[i].flag = true;
         processes[i].departure = this.state.counter + 1;
       }
-  	};
+    };
   }
   removeProcess(id) {
-  	var processes = [];
+    var processes = [];
     var x = 0;
-  	for (var i = 0; i < this.state.processes.length; i++) {
-  		if(this.state.processes[i].key != id){
+    for (var i = 0; i < this.state.processes.length; i++) {
+      if(this.state.processes[i].key != id){
         this.state.processes[i].key = x;
         processes.push(this.state.processes[i]);
         x++;
       }
-  	};
-  	this.setState((prev)=>{
-  		return {
-  			processes,
+    };
+    this.setState((prev)=>{
+      return {
+        processes,
         lastKey: x - 1
-  		}
-  	})
+      }
+    })
   }
   handleInputChange(id, arrival, remainder, priority) {
-  	for (var i = 0; i < this.state.processes.length; i++) {
-  		if(this.state.processes[i].key == id){
-  			this.setState((prev)=>{
-		  		var processes = prev.processes;
-		  		processes[i].arrival = +arrival;
-		  		processes[i].remainder = +remainder;
-		  		processes[i].cpu = +remainder;
-		  		processes[i].priority = +priority;
-		  		return {
-		  			processes
-		  		}
-		  	})
-  			break;
-  		}
-  	};
+    for (var i = 0; i < this.state.processes.length; i++) {
+      if(this.state.processes[i].key == id){
+        this.setState((prev)=>{
+          var processes = prev.processes;
+          processes[i].arrival = +arrival;
+          processes[i].remainder = +remainder;
+          processes[i].cpu = +remainder;
+          processes[i].priority = +priority;
+          return {
+            processes
+          }
+        })
+        break;
+      }
+    };
   }
   startClicked() {
-  	if(this.state.state == 'reset'){
-  		this.setState((prev)=>{
-  			return {
-  				state: 'running',
-  				firstCapture: prev.processes.map(cur=>Object.assign({},cur)) 
-  			}
-  		})
-  	}
-  	this.setState((prev)=>{
-  		var processes = prev.processes;
-  		processes.forEach((cur)=>{
-  			cur.disabled = true;
-  		});
-  		return {
-  			processes,
+    if(this.state.state == 'reset'){
+      this.setState((prev)=>{
+        return {
+          state: 'running',
+          firstCapture: prev.processes.map(cur=>Object.assign({},cur)) 
+        }
+      })
+    }
+    this.setState((prev)=>{
+      var processes = prev.processes;
+      processes.forEach((cur)=>{
+        cur.disabled = true;
+      });
+      return {
+        processes,
         pause: true
-  		}
-  	})	
+      }
+    })  
   }
   methodChanged(event) {
-  	let temp = event.target.value;
-  	this.setState(()=>{
-  		return {
-  			method: temp
-  		}
-  	})
+    let temp = event.target.value;
+    this.setState(()=>{
+      return {
+        method: temp
+      }
+    })
   }
   updateProcesses(results, processes) {
-  	results.output.forEach((cur)=>{
-  		this.downgradeProcess(cur.key, cur.runTime, processes)
-  	});
-  	this.setState(()=>{
-  		return {
-  			lastProcess: results.lastProcess,
-  			processes
-  		}
-  	})
+    results.output.forEach((cur)=>{
+      this.downgradeProcess(cur.key, cur.runTime, processes)
+    });
+    this.setState(()=>{
+      return {
+        lastProcess: results.lastProcess,
+        processes
+      }
+    })
   }
   resetClock() {
-  	clearInterval(this.state.clock);
-  	this.setState(()=>{
-  		return {
-  			counter: 0,
-  			state: 'reset',
-  			clock: undefined,
-  			output: [],
+    clearInterval(this.state.clock);
+    this.setState(()=>{
+      return {
+        counter: 0,
+        state: 'reset',
+        clock: undefined,
+        output: [],
         pause: false,
-  			processes: this.state.firstCapture,
+        processes: this.state.firstCapture,
         lastKey: this.state.firstCapture.length != 0 ? this.state.firstCapture[this.state.firstCapture.length - 1].key : -1,
-  			firstCapture : [],
+        firstCapture : [],
         waitingTime: 0,
         turnAroundTime: 0,
         lastKeyNull: -1
-  		}
-  	})
+      }
+    })
   }
   pauseClock() {
     clearInterval(this.state.clock);
@@ -181,24 +181,24 @@ class App extends Component {
     })
   }
   startClock() {
-  	this.startClicked();
-  	this.setState(()=>{
-  		return {
-  			clock: setInterval(()=>{
-		  		this.runStep(this.state.step);	
-          this.updateTimes();	
-		  	},1000)
-  		}
-  	})
+    this.startClicked();
+    this.setState(()=>{
+      return {
+        clock: setInterval(()=>{
+          this.runStep(this.state.step);  
+          this.updateTimes(); 
+        },1000)
+      }
+    })
   }
   runStep(step) {
     var input = this.state.processes.slice();
     input = input.filter((cur)=>{
       return cur.arrival <= this.state.counter
     }).filter((cur)=>cur.remainder != 0);
-  	input = input.map(cur=>Object.assign({},cur));
-  	var lastProcess = this.state.lastProcess;
-  	let results;
+    input = input.map(cur=>Object.assign({},cur));
+    var lastProcess = this.state.lastProcess;
+    let results;
     //el3el2 waleed
     if (input.length == 0) {
       this.setState((prev)=>{
@@ -229,35 +229,35 @@ class App extends Component {
         }
       });
     }else{
-    	if(this.state.method == "FCFS")results = {output:fcfs(input.sort((prev, cur)=>{
+      if(this.state.method == "FCFS")results = {output:fcfs(input.sort((prev, cur)=>{
         return prev.arrival > cur.arrival;
       }), step, lastProcess), lastProcess: undefined};
-    	else if(this.state.method == "RR")results = {output:fcfs(input, step, lastProcess), lastProcess: undefined};
-    	else if(this.state.method == "SJF")results = non_primitive_sjf(input, step, lastProcess);
-    	else if(this.state.method == "SJF-P")results = primitive_sjf(input, step, lastProcess);
-    	else if(this.state.method == "Priority")results = non_primitive_prority(input, step, lastProcess);
-    	else if(this.state.method == "Priority-p")results = primitive_prority(input, step, lastProcess);
-    	this.updateProcesses(results, this.state.processes);
-    	this.setState((prev)=>{
-  	  	let output = prev.output.concat(results.output);
-  	  	output = output.reduce((acc, cur)=>{
-  	  		if(cur.runTime == 0)return acc;
-  	  		if(acc.length != 0){
-  	  			if(acc[acc.length - 1].key == cur.key){
-  	  				acc[acc.length - 1].runTime += cur.runTime;
-  	  			}else{
-  	  				acc.push(cur)
-  	  			}
-  	  		}else{
-  	  			acc.push(cur)
-  	  		}
-  	  		return acc;
-  	  	},[]);
-    		return {
-    			counter: prev.counter + step,
-    			output
-    		}
-    	})
+      else if(this.state.method == "RR")results = {output:fcfs(input, step, lastProcess), lastProcess: undefined};
+      else if(this.state.method == "SJF")results = non_primitive_sjf(input, step, lastProcess);
+      else if(this.state.method == "SJF-P")results = primitive_sjf(input, step, lastProcess);
+      else if(this.state.method == "Priority")results = non_primitive_prority(input, step, lastProcess);
+      else if(this.state.method == "Priority-p")results = primitive_prority(input, step, lastProcess);
+      this.updateProcesses(results, this.state.processes);
+      this.setState((prev)=>{
+        let output = prev.output.concat(results.output);
+        output = output.reduce((acc, cur)=>{
+          if(cur.runTime == 0)return acc;
+          if(acc.length != 0){
+            if(acc[acc.length - 1].key == cur.key){
+              acc[acc.length - 1].runTime += cur.runTime;
+            }else{
+              acc.push(cur)
+            }
+          }else{
+            acc.push(cur)
+          }
+          return acc;
+        },[]);
+        return {
+          counter: prev.counter + step,
+          output
+        }
+      })
     }
   }
   render() {
@@ -276,19 +276,19 @@ class App extends Component {
     function getColor(key) {
       return colors[key%colors.length];
     }
-  	var processes = this.state.processes.map((cur)=>{
-  		function onChangeremainder(event) {
-  			this.handleInputChange(cur.key, cur.arrival, event.target.value, cur.priority);
-  		}
-  		function onChangePriority(event) {
-  			this.handleInputChange(cur.key, cur.arrival, cur.remainder, event.target.value);
-  		}
-  		function onChangeArrival(event) {
-  			this.handleInputChange(cur.key, event.target.value, cur.remainder, cur.priority);
-  		}
-  		function onDelete() {
-  			this.removeProcess(cur.key);
-  		}
+    var processes = this.state.processes.map((cur)=>{
+      function onChangeremainder(event) {
+        this.handleInputChange(cur.key, cur.arrival, event.target.value, cur.priority);
+      }
+      function onChangePriority(event) {
+        this.handleInputChange(cur.key, cur.arrival, cur.remainder, event.target.value);
+      }
+      function onChangeArrival(event) {
+        this.handleInputChange(cur.key, event.target.value, cur.remainder, cur.priority);
+      }
+      function onDelete() {
+        this.removeProcess(cur.key);
+      }
   		return (
   			<tr key={cur.key}>
 				<th scope="row">{cur.key}</th>
