@@ -83,6 +83,7 @@ header span {
     height: auto;
     flex-direction: column;
     justify-content: space-around;
+    margin-top: 20px;
 }
 
 /*---------------------------------------------------------*/
@@ -116,15 +117,26 @@ header span {
     border: none;
 }
 
+.no-spinners {
+    -moz-appearance:textfield;
+  }
+  
+  .no-spinners::-webkit-outer-spin-button,
+  .no-spinners::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+
 /*--------------------------------------------------------------------*/
 
 /* buttons styles */
  .add {
     background-color:   #903749;
-    width: 60px;
+    width: 360px;
     height: 40px;
     border: none;
-    border-radius: 8%;
+    border-radius: 4px;
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
@@ -202,7 +214,8 @@ tr:hover .delete--btn {
     background-color: #e3e3e31a;
     text-align: center;
     font-weight: 700;
-    padding-top: 4px;
+    
+    font-size: 16px;
     
 }
 
@@ -252,12 +265,25 @@ tr:hover .delete--btn {
     width: 100px;
     height: 30px;
     background-color: #e3e3e31a;
-    color: #e3e3e3f3;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    color: #903749;
+    margin-bottom: 30px;
+    margin-top: 10px;
     border: none;
+    font-size: 14px;
+    font-weight: 700;
 }
 
+.quantum{
+    width: 100px;
+    height: 30px;
+    background-color: #e3e3e31a;
+    color: #e3e3e3f3;
+    margin-bottom: 30px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center
+}
 /*---------------------------------------*/
 
 .time{
@@ -282,9 +308,12 @@ tr:hover .delete--btn {
 .time span{
     color:#e3e3e3; 
     font-weight:600;
+    font-weight:600;
+    font-size: 14px;
 }
 .time label{
     color: #e3e3e3;
+    font-size: 12px;
 }
 
 .chart .process{

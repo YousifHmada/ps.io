@@ -262,16 +262,16 @@ class App extends Component {
   }
   render() {
     var colors = [
-      '#375a7f',
-      '#b72a67',
-      '#fa9856',
-      '#8559a5',
-      '#e95280',
-      '#e8751a',
-      '#35c2bd',
-      '#7e6752',
-      '#6ba083',
-      '#669b7'
+      '#e4d183',
+      '#f9c7cf',
+     '#e95280',
+     '#393e46',
+     '#fa9856',
+     '#522546',
+     '#928a97',
+     '#29a19c',
+     '#aacfd0',
+     '#9ba6a5'
     ]
     function getColor(key) {
       return colors[key%colors.length];
@@ -293,13 +293,13 @@ class App extends Component {
   			<tr key={cur.key}>
 				<th scope="row">{cur.key}</th>
 				<td>
-					<input type="text" value={cur.arrival} onChange={onChangeArrival.bind(this)} disabled={cur.disabled}/>
+					<input type="text" type="number" className="no-spinners" value={cur.arrival} onChange={onChangeArrival.bind(this)} disabled={cur.disabled}/>
 				</td>
 				<td>
-					<input type="text" value={cur.remainder} onChange={onChangeremainder.bind(this)} disabled={cur.disabled}/>
+					<input type="text" type="number" className="no-spinners" value={cur.remainder} onChange={onChangeremainder.bind(this)} disabled={cur.disabled}/>
 				</td>
 				<td>
-					<input type="text" value={cur.priority} onChange={onChangePriority.bind(this)} disabled={cur.disabled}/>
+					<input type="text" type="number" className="no-spinners" value={cur.priority} onChange={onChangePriority.bind(this)} disabled={cur.disabled}/>
 					{cur.disabled ? '' : (
 						<button className="delete--btn" onClick={onDelete.bind(this)}>
 							<img src="close.svg" alt=""/>
@@ -361,6 +361,7 @@ class App extends Component {
                 <option value="Priority-p">Priority-Preemptive</option>
               </select>
             </div>
+                <input type="text" className = "quantum no-spinners" type="number"  placeholder = "Quantum" />
             <div className="timer">
               <label>{this.state.counter}</label>
               <div>
@@ -380,6 +381,7 @@ class App extends Component {
                 </button>
               </div>
             </div>
+
           </div>
         </div>
 				<button className="add" onClick={this.addProcess.bind(this)} style={{
@@ -389,17 +391,17 @@ class App extends Component {
         }} 
         disabled={this.state.pause}>
 					<span style={{
-            color: this.state.pause ? 'black' : ''
-          }}>Add</span>
+            color: this.state.pause ? '#903749' : ''
+          }}>ADD</span>
 				</button>
         <div className="output">
           <div className="time">
             <div className="waiting-time">
-              <span>Waiting Time :</span>
+              <span>Waiting Time : </span>
               <label>{this.state.waitingTime} s</label>
             </div>
             <div className="turn-around-time">
-              <span>Turn around Time :</span>
+              <span>Turn-around Time : </span>
               <label>{this.state.turnAroundTime} s</label>
             </div>
           </div>
