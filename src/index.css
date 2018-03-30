@@ -1,10 +1,6 @@
 * {
     padding: 0%;
 }
-@font-face {
-    font-family: "BebasNeue";
-    /*src: url("BebasNeue.otf");*/
-}
 body {
     display: flex;
     align-items: center;
