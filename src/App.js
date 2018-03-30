@@ -15,7 +15,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      lastKey : -1,
+      lastKey : 2,
       lastKeyNull : -1,
       method: 'FCFS',
       state: 'reset',
@@ -27,7 +27,38 @@ class App extends Component {
       pause: false,
       lastProcess: undefined,
       output: [],
-      processes: [],
+      processes: [
+        {
+          key: 0,
+          arrival: 0,
+          'priority':1,
+          'cpu':0,
+          'departure':0,
+          'falg': false,
+          'remainder':0,
+          'disabled':false
+        },
+        {
+          key: 1,
+          arrival: 0,
+          'priority':1,
+          'cpu':0,
+          'departure':0,
+          'falg': false,
+          'remainder':0,
+          'disabled':false
+        },
+        {
+          key: 2,
+          arrival: 0,
+          'priority':1,
+          'cpu':0,
+          'departure':0,
+          'falg': false,
+          'remainder':0,
+          'disabled':false
+        }
+      ],
       firstCapture: []
     }
   }
