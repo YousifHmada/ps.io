@@ -1,3 +1,31 @@
+var turn = 0;
+var remaining_quantum = 0 ;
+function roundrobin(input,Quantum){
+    var output = [];
+    if (remaining_quantum == 0)
+        {
+            remaining_quantum = Quantum;
+        }
+    input[turn].reminder --;
+    remaining_quantum --;
+    output.push(
+        {
+            key:input[turn].key,
+            runtime:1
+        }
+    );
+    if(remaining_quantum == 0 && input[turn].reminder != 0)
+        {
+            remaining_quantum = Quantum;
+            turn ++;
+        }
+    else if (input[turn].reminder == 0)
+        {
+            remaining_quantum = Quantum;
+        }
+    return output;
+}
+
 function non_primitive_prority(input, cpuBurst, lastProcess){
 	var output = [];
 	function selectedProceess(){
@@ -245,6 +273,7 @@ module.exports = {
 	primitive_sjf,
 	non_primitive_sjf,
 	primitive_prority,
-	non_primitive_prority
+	non_primitive_prority,
+	roundrobin
 }
 

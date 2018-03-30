@@ -6,7 +6,8 @@ import {
   primitive_sjf,
   non_primitive_sjf,
   primitive_prority,
-  non_primitive_prority
+  non_primitive_prority,
+  roundrobin
 } from './logic.js';
 
 
@@ -232,11 +233,14 @@ class App extends Component {
       if(this.state.method == "FCFS")results = {output:fcfs(input.sort((prev, cur)=>{
         return prev.arrival > cur.arrival;
       }), step, lastProcess), lastProcess: undefined};
-      else if(this.state.method == "RR")results = {output:fcfs(input, step, lastProcess), lastProcess: undefined};
+      else if(this.state.method == "RR")results = {output:roundrobin(input.sort((prev, cur)=>{
+        return prev.arrival > cur.arrival;
+      }), step, lastProcess), lastProcess: undefined};
       else if(this.state.method == "SJF")results = non_primitive_sjf(input, step, lastProcess);
       else if(this.state.method == "SJF-P")results = primitive_sjf(input, step, lastProcess);
       else if(this.state.method == "Priority")results = non_primitive_prority(input, step, lastProcess);
       else if(this.state.method == "Priority-p")results = primitive_prority(input, step, lastProcess);
+      console.log(results);
       this.updateProcesses(results, this.state.processes);
       this.setState((prev)=>{
         let output = prev.output.concat(results.output);
