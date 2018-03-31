@@ -375,9 +375,14 @@ class App extends Component {
 		<header>
       <span>Scheduler</span>
 		</header>
-		<section className="input">
+
+	
 			<div className="container">
+
+
+
         <div className="holder">
+
           <div className="table-content">
   					<table className="table">
   						<thead>
@@ -393,7 +398,10 @@ class App extends Component {
   						</tbody>
   					</table>
   				</div>
+
+
   				<div className="controller">
+
             <div className="type">
               <select onChange={this.methodChanged.bind(this)}>
                 <option value="FCFS" selected>FCFS</option>
@@ -404,10 +412,14 @@ class App extends Component {
                 <option value="Priority-p">Priority-Preemptive</option>
               </select>
             </div>
+
+
                 <input disabled={this.state.state != 'reset'} style={{backgroundColor: (this.state.state != 'reset') ? '#ccc' : '',color: (this.state.state != 'reset') ? '#903749' : ''}} type="text" className = "quantum no-spinners" type="number"  onChange={this.quantumChanged.bind(this)} placeholder = "Quantum" />
+           
+
             <div className="timer">
               <label>{this.state.counter}</label>
-              <div>
+              
                 {!this.state.pause ? 
                     (     
                     <button className="play" onClick={this.startClock.bind(this)}>
@@ -423,10 +435,23 @@ class App extends Component {
                   <img src="media-stop-button.svg" alt="" />
                 </button>
               </div>
-            </div>
-
+           </div>
           </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				<button className="add" onClick={this.addProcess.bind(this)} style={{
           backgroundColor: this.state.pause ? '#ccc' : '',  
           color: this.state.pause ? '#ccc' : '',
@@ -437,24 +462,39 @@ class App extends Component {
             color: this.state.pause ? '#903749' : ''
           }}>ADD</span>
 				</button>
-        <div className="output">
+
+
+
+<div className="output">
+
           <div className="time">
+            
             <div className="waiting-time">
               <span>Waiting Time : </span>
               <label>{this.state.waitingTime} s</label>
             </div>
+
             <div className="turn-around-time">
               <span>Turn-around Time : </span>
               <label>{this.state.turnAroundTime} s</label>
             </div>
           </div>
+
           <div className="chart">
             {ganttChart}
           </div>
-				</div>
-			</div>
-		</section>
-	
+      </div>
+
+        
+      </div>
+
+
+
+       
+
+        
+
+
     );
   }
 }

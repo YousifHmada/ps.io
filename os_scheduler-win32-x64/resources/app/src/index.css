@@ -1,0 +1,318 @@
+* {
+    margin: 0%;
+    padding: 0%;
+}
+@font-face {
+    font-family: "Another day in Paradise";
+}
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #ccc;
+}
+
+
+/* window styles */
+.UI {
+    margin-top: 20px;  
+    width: 450px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-bottom: 20px;
+    background-color: rgb(243, 234, 241);
+    
+}
+
+header {
+    width: 100%;
+    height: 50px;
+    
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+header span {
+    font-size: 40px;
+    font-weight: 700;
+    font-family:"Another day in Paradise", Arial, sans-serif;
+    color: #f6318c;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.table-content {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+
+.controller {
+    display: flex;
+    height: auto;
+    width: 450px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.output{
+    width: 420px;
+    height: auto;
+    border-top: 1px solid #364f6bad;
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    justify-content: space-around;
+}
+/*---------------------------------------------------------*/
+
+/* table */
+
+.table {
+    width: 420px;
+    color:#364f6b;
+    font-size: 16px;
+    border: 2px solid  #364f6bad;
+    
+    
+    
+}
+
+.input .table td {
+    height: 10px;
+    color: #e3e3e3f3;
+    text-align: center
+    
+}
+.input .table th {
+    height: 10px;
+    text-align: center
+    
+}
+.table input {
+    width: 60px;
+    color: #4b6685d8;
+    background-color: transparent;
+    padding-left: 5px;
+    border: none;
+}
+
+
+/*--------------------------------------------------------------------*/
+
+/* buttons styles */
+ .add {
+    background-color:transparent;
+    width: 30px;
+    height: 30px;
+    border: 1px solid  #f14796;
+    
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    color: #f6318c;
+ }
+
+ .submit {
+    width: 50px;
+    height: 50px;
+    border: 1px solid  #f14796;
+    background-color:transparent;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    color: #f6318c;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
+    margin-left: 170px;
+}
+.add:hover, .submit:hover{
+    background-color: #f6318c;
+    color: #fff;
+}
+
+.delete--btn {
+    width: 18px;
+    height: 20px;
+    background-color: #f14796;
+    border: 1px solid #f14796;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    display: none;
+}
+
+.delete--btn img {
+    width: 8px;
+    height: 8px;
+    display: block;
+    text-align: center;
+    margin: auto;
+    
+}
+
+tr:hover .delete--btn {
+    display: inline;
+}
+
+
+
+.timer {
+    width: 100px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.timer label {
+    width: 60px;
+    height: 30px;
+    border: 1px solid  #364f6bad;
+    color: #364f6be8;
+    background-color:transparent;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    display: block;
+}
+
+
+.timer .stop {
+    width: 30px;
+    height: 30px;
+    background-color: #f6318c;
+    color: #e3e3e3;
+    border: 1px solid #f6318c;
+    border-radius: 50%;
+    padding: 0%;
+    cursor: pointer;
+    
+}
+.timer .play
+ {
+    width: 30px;
+    height: 30px;
+    background-color: #f6318c;
+    color: #e3e3e3;
+    border: 1px solid #f6318c;
+    border-radius: 50%;
+    padding: 0%;
+    cursor: pointer;
+    
+}
+.timer .pause{
+    width: 30px;
+    height: 30px;
+    background-color: #f6318c;
+    color: #e3e3e3;
+    border: 1px solid #f6318c;
+    border-radius: 50%;
+    padding: 0%;
+    cursor: pointer;
+}
+.delete--btn:active,
+.add:active,
+.submit:active,
+.play-pause:active,
+.stop:active {
+    background-color: #f755a0;
+}
+/* .timer .play-pause {
+    border-right: 1px solid #e3e3e31c;
+    border-left: 1px solid #e3e3e31c;
+} */
+
+.timer img {
+    fill: #fff;
+    width: 14px;
+    /*margin-bottom: 4px;*/
+}
+
+.type select {
+    width: 100px;
+    height: 30px;
+    background-color: transparent;
+    color:#364f6bec;
+    border: 1px solid #364f6bad;
+    
+    
+}
+
+/*---------------------------------------*/
+
+ .time{
+    display: flex;
+    height: 40px;
+    width: 420px;
+    margin-top: 10px;
+    flex-direction: row;
+    justify-content: space-around;
+    
+}
+.time span{
+    color:#364f6bec; 
+    font-weight:600;
+}
+.time label{
+    color: #4b6685d8;
+}
+.chart{
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    width: 420px;
+    margin-top: 10px;
+
+}
+.chart .process{
+    flex: 1;
+    height: 45px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    ;
+    
+}
+.chart .process span{
+    height: 15px;
+    margin: 2px 0;
+    border-left: 3px solid cornsilk;
+}
+.chart .process .start-time, .key{
+    height: 10px;
+
+}
+/*
+.chart .process .end-time{
+    height: 10px;
+    float: right;
+}*/
+.red{
+    background-color: #b72a67;
+}
+.yellow{
+    background-color: #fa9856
+}
+.blue{
+    background-color: #375a7f}
+.green{
+    background-color: #e8559a
+}
