@@ -332,26 +332,26 @@ class App extends Component {
       function onDelete() {
         this.removeProcess(cur.key);
       }
-  		return (
-  			<tr key={cur.key}>
-				<th scope="row">{cur.key}</th>
-				<td>
-					<input type="text" type="number" className="no-spinners" value={cur.arrival} onChange={onChangeArrival.bind(this)} disabled={cur.disabled}/>
-				</td>
-				<td>
-					<input type="text" type="number" className="no-spinners" value={cur.remainder} onChange={onChangeremainder.bind(this)} disabled={cur.disabled}/>
-				</td>
-				<td>
-					<input type="text" type="number" className="no-spinners" value={cur.priority} onChange={onChangePriority.bind(this)} disabled={cur.disabled}/>
-					{cur.disabled ? '' : (
-						<button className="delete--btn" onClick={onDelete.bind(this)}>
-							<img src="close.svg" alt=""/>
-						</button>
-					)}
-				</td>
-			</tr>
-  		)
-  	})
+      return (
+        <tr key={cur.key}>
+        <th scope="row">{cur.key}</th>
+        <td>
+          <input type="text" type="number" className="no-spinners" value={cur.arrival} onChange={onChangeArrival.bind(this)} disabled={cur.disabled}/>
+        </td>
+        <td>
+          <input type="text" type="number" className="no-spinners" value={cur.remainder} onChange={onChangeremainder.bind(this)} disabled={cur.disabled}/>
+        </td>
+        <td>
+          <input type="text" type="number" className="no-spinners" value={cur.priority} onChange={onChangePriority.bind(this)} disabled={cur.disabled}/>
+          {cur.disabled ? '' : (
+            <button className="delete--btn" onClick={onDelete.bind(this)}>
+              <img src="close.svg" alt=""/>
+            </button>
+          )}
+        </td>
+      </tr>
+      )
+    })
     var startTime = 0;
     var counter = this.state.output.reduce((aggr, cur)=>aggr+=cur.runTime,0);
     var ganttChart = this.state.output.map((cur, index)=>{
@@ -371,37 +371,29 @@ class App extends Component {
      )
     })
     return (
-      	
-		<header>
+        <section className="UI">
+    <header>
       <span>Scheduler</span>
-		</header>
-
-	
-			<div className="container">
-
-
-
+    </header>
+    <section className="input">
+      <div className="container">
         <div className="holder">
-
           <div className="table-content">
-  					<table className="table">
-  						<thead>
-  							<tr>
-  								<th scope="col">PP</th>
-  								<th scope="col">Arrival</th>
-  								<th scope="col">{this.state.state == 'reset' ? 'CPU Brust' : 'Remainder'}</th>
-  								<th scope="col">Priority</th>
-  							</tr>
-  						</thead>
-  						<tbody>
-  							{processes}
-  						</tbody>
-  					</table>
-  				</div>
-
-
-  				<div className="controller">
-
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">P</th>
+                  <th scope="col">Arrival</th>
+                  <th scope="col">{this.state.state == 'reset' ? 'CPU Brust' : 'Remainder'}</th>
+                  <th scope="col">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                {processes}
+              </tbody>
+            </table>
+          </div>
+          <div className="controller">
             <div className="type">
               <select onChange={this.methodChanged.bind(this)}>
                 <option value="FCFS" selected>FCFS</option>
@@ -412,14 +404,10 @@ class App extends Component {
                 <option value="Priority-p">Priority-Preemptive</option>
               </select>
             </div>
-
-
                 <input disabled={this.state.state != 'reset'} style={{backgroundColor: (this.state.state != 'reset') ? '#ccc' : '',color: (this.state.state != 'reset') ? '#903749' : ''}} type="text" className = "quantum no-spinners" type="number"  onChange={this.quantumChanged.bind(this)} placeholder = "Quantum" />
-           
-
             <div className="timer">
               <label>{this.state.counter}</label>
-              
+              <div>
                 {!this.state.pause ? 
                     (     
                     <button className="play" onClick={this.startClock.bind(this)}>
@@ -435,66 +423,38 @@ class App extends Component {
                   <img src="media-stop-button.svg" alt="" />
                 </button>
               </div>
-           </div>
+            </div>
+
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				<button className="add" onClick={this.addProcess.bind(this)} style={{
+        <button className="add" onClick={this.addProcess.bind(this)} style={{
           backgroundColor: this.state.pause ? '#ccc' : '',  
           color: this.state.pause ? '#ccc' : '',
           border: this.state.pause ? '1px solid #ccc' : ''
         }} 
         disabled={this.state.pause}>
-					<span style={{
+          <span style={{
             color: this.state.pause ? '#903749' : ''
           }}>ADD</span>
-				</button>
-
-
-
-<div className="output">
-
+        </button>
+        <div className="output">
           <div className="time">
-            
             <div className="waiting-time">
               <span>Waiting Time : </span>
               <label>{this.state.waitingTime} s</label>
             </div>
-
             <div className="turn-around-time">
               <span>Turn-around Time : </span>
               <label>{this.state.turnAroundTime} s</label>
             </div>
           </div>
-
           <div className="chart">
             {ganttChart}
           </div>
+        </div>
       </div>
-
-        
-      </div>
-
-
-
-       
-
-        
-
-
+    </section>
+  </section>
     );
   }
 }

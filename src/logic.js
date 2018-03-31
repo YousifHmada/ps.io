@@ -1,3 +1,4 @@
+
 var turn = 0;
 var remaining_quantum = 0 ;
 
@@ -264,9 +265,4 @@ module.exports = {
 	non_primitive_prority,
 	roundrobin,
 	resetQuantum
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> 8f247b5bbd39b67303fa51751d7771abd40bac3d

@@ -1,15 +1,13 @@
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
-require('electron-reload')(__dirname, '/../build/index.html');
 let mainWindow;
 
 function createWindow(){
     mainWindow = new BrowserWindow({ 
-      width: 556,
-      height: 448,
+      width: 550,
+      height: 420,
       resizable:false  ,
-      backgroundColor: 'red',
       autoHideMenuBar:true,
       plugins:true,
       scrollBounce :true,
@@ -23,7 +21,6 @@ function createWindow(){
     });
 
     mainWindow.loadURL(startUrl);
-    // mainWindow.webContents.openDevTools();
     mainWindow.on('closed', () => mainWindow = null);
 }
 
